@@ -88,11 +88,23 @@ var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch
         console.log("the temperature is " + response.main.temp + " degrees Fahrenheit");
         console.log("the humidity is " + response.main.humidity + " percent");
         console.log("the wind speed is " + response.wind.speed + " MPH");
+        console.log("the conditions are " + response.weather[0].main + " and the weather icon code is " + response.weather[0].icon);
         console.log("the coordinates are " + response.coord.lat + " degrees latitude / " + response.coord.lon + " degrees longitude");
        
         });
 
     //     http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
+
+// var queryUvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey +"&lat=" + 33.75 + "&lon=" +-88.39;
+
+// $.ajax({
+//           url: queryFiveDayURL,
+//           method: "GET"
+//         }).then(function(response) {
+//             console.log(response);
+//         //   $("#currentStats").text(JSON.stringify(response));
+//         });
+        
 
     // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
 
@@ -108,7 +120,21 @@ var queryFiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ci
         //list[i] can go up to index 39.  weather [i] is always 0.
         //might need an if /else to narrow this down to always return afternoon forecasts.
             console.log(response.list[39].weather[0].main);
+            console.log(response.list[39].weather[0].icon);
+            console.log("the date forecasted is " + JSON.stringify(response.list[39].dt_txt));
         });
+    
+        //INFORMATION ON INCORPORATING ICONS
+    // <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+//At the HTML above you see the unique thing missing is the src attribute, so let's fill it with some jQuery and JavaScript. You may create a variables to hold the icon code provided by the API like:
+
+//var iconcode = a.weather[0].icon;
+//After it you should concatenate this var iconcode with the url that contains the icons, like:
+
+//var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+//Finally just change src attribute in the DOM by doing this:
+
+//$('#wicon').attr('src', iconurl);
         
         
     // var city = $(this).attr("data-name");
