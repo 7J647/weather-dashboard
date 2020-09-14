@@ -21,13 +21,41 @@
   <body>
    <!-- testing Bootstrap -->
     <!-- <h1>Hello world!</h1> -->
+        <!-- this is outside the container so it stretches across browser -->
         <div>
                 <p id="dashboard">Weather Dashboard</p>
-
         </div>
 
-        <div class="container">
-       
+ <div class="container">
+     <!--one row for the entire dashboard-->
+     <div>
+         <!--3 of 12 columns for the search form and recent searches-->
+         <div class="col-sm-3">
+             <!--this is the search for a city box-->
+            <div id="searchCity"></div>
+            <!--we will append rows here for recent searches-->
+            <div id="recentSearches"></div>
+
+         </div>
+
+         <!--9 of 12 columns for the main display section-->
+         <div class="col-sm-9">
+             <!--this is where the current conditions are displayed-->
+             <div>
+                <!--this is where the current conditions are displayed-->
+                <div class="col-sm-12" id="currentStats"></div>
+             </div>
+
+             <div>
+                 <!--this is where the 5-day forecast will go and float left-->
+                 <div class="col-sm-12" id="fiveDayForecast"></div>
+             </div>
+                        
+         </div>
+
+     </div>
+</div>
+     
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
