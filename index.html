@@ -104,7 +104,10 @@ var queryFiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + ci
         }).then(function(response) {
             console.log(response);
         //   $("#currentStats").text(JSON.stringify(response));
-            console.log(response.list[0].weather[0].main);
+        //console log on 24 hours ahead of query, assumes will be done in the afternoon obviously.
+        //list[i] can go up to index 39.  weather [i] is always 0.
+        //might need an if /else to narrow this down to always return afternoon forecasts.
+            console.log(response.list[39].weather[0].main);
         });
         
         
