@@ -14,7 +14,6 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./style.css" />
     
   </head>
@@ -30,13 +29,16 @@
      <!--one row for the entire dashboard-->
      <div>
          <!--3 of 12 columns for the search form and recent searches-->
-         <div class="col-sm-3">
-             <!--this is the search for a city box-->
-            <div id="searchCity"></div>
-            <!--we will append rows here for recent searches-->
-            <div id="recentSearches"></div>
+         <section class="col-sm-3" id="searchSection">
+             <!-- <p id="searchHeader">Search for a city:</p> -->
 
-         </div>
+             <form id="searchCity">
+                <label>Search for a city</label>
+                <input type="text" id="city-input">
+                 <!-- This button will trigger our AJAX call -->
+                <input id="searchButton" type="submit" value="Submit">
+              </form>   
+         </section>
 
          <!--9 of 12 columns for the main display section-->
          <div class="col-sm-9">
@@ -55,16 +57,44 @@
 
      </div>
 </div>
-     
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-    //testing jQuery
-    // document.body.append("Hello hello!");
 
+    var cities =[""];
+    $(document).ready(function() {
+    
+    // this .on click is where we generate the AJAX call
+    $("#searchButton").on("click", function(event) {
+    
+    //event.preventDefault prevents the submit button from trying to submit a form therefore reloading the page, when clicked
+    event.preventDefault();
+
+    // Here we grab the text from the input box
+    var citySearch = $("#city-input").val().trim();
+
+    // This is our API key so that we don't have to type out a long URL
+     var APIKey = "924c9807e2ecee5b538b9faeb8d6306b";
+
+    // Here we have built the URL we need to query the database
+var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&appid=" + APIKey + "&units=imperial";
+
+    $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(function(response) {
+            console.log(response);
+        //   $("#currentStats").text(JSON.stringify(response));
+        });
+       
+    // var city = $(this).attr("data-name");
+
+
+    })
+})
 
     
     </script>
+    <script src="./script.js"></script>
   </body>
 </html>

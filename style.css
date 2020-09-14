@@ -9,3 +9,16 @@
     background-color: #15191dd9
      
 }
+
+#searchHeader {
+    height: 5px;
+}
+
+#searchRow {
+    height: 30px;
+}
+#searchButton {
+    background-color:  blue;
+    height:  30px;
+
+}
