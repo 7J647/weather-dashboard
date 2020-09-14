@@ -85,8 +85,29 @@ var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch
         }).then(function(response) {
             console.log(response);
         //   $("#currentStats").text(JSON.stringify(response));
-        });
+        console.log("the temperature is " + response.main.temp + " degrees Fahrenheit");
+        console.log("the humidity is " + response.main.humidity + " percent");
+        console.log("the wind speed is " + response.wind.speed + " MPH");
+        console.log("the coordinates are " + response.coord.lat + " degrees latitude / " + response.coord.lon + " degrees longitude");
        
+        });
+
+    //     http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
+
+    // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
+
+var queryFiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&appid=" + APIKey + "&units=imperial";
+
+    $.ajax({
+          url: queryFiveDayURL,
+          method: "GET"
+        }).then(function(response) {
+            console.log(response);
+        //   $("#currentStats").text(JSON.stringify(response));
+            console.log(response.list[0].weather[0].main);
+        });
+        
+        
     // var city = $(this).attr("data-name");
 
 
