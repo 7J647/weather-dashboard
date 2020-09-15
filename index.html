@@ -203,7 +203,15 @@
                 $("#fiveDay").append(dayThreeForecast);
                 dayThreeForecast.empty().append(dayThreeIcon, dayThreeTemp, dayThreeHumidity);
 
-            // var dayFourForecast=$("#Day4Forecast");
+            var dayFourForecast=$("#Day4Forecast");
+                var dayFourTemp = $("<h3>").text("Temp: " + response.daily[3].temp.max + "˚F");
+                var dayFourHumidity = $("<h3>").text("Humidity: " + response.daily[3].humidity +"%");
+                var dayFourIconURL = "http://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png";
+                var dayFourIcon = $("<img>").attr("src", dayFourIconURL);
+
+                $("#fiveDay").append(dayFourForecast);
+                dayFourForecast.empty().append(dayFourIcon, dayFourTemp, dayFourHumidity);
+
             // var dayFiveForecast=$("#Day5Forecast");
 
 
