@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
   </head>
   <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
     <!-- testing Bootstrap -->
     <!-- <h1>Hello world!</h1> -->
     <!-- this is outside the container so it stretches across browser -->
@@ -42,6 +44,7 @@
         <div class="col-sm-9">
           <!--this is where the current conditions are displayed-->
           <h1 id="CityName"></h1>
+          <h1 id="currentDay"></h1>
           <div>
             <!--this is where the current conditions are displayed-->
             <div class="col-sm-12" id="currentStats"></div>
@@ -131,6 +134,12 @@
 
             var cityName = response.name;
             $("#CityName").text(cityName);
+
+            //used Moment.js to bring in the date
+            var currentDay = $("#currentDay");
+            currentDay.text(moment().format("MMMM DD, YYYY"));
+            
+
 
             // console.log("the date is " + response.dt);
             //SUGGESTION APPEND TO MAIN SECTION
