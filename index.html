@@ -97,7 +97,7 @@
 
             for (i = 0; i < cities.length; i++) {
                 var previousCity = $("<li>").text(cities[i]).addClass("listCities");
-                $("#savedSearches").append(previousCity);
+                $("#savedSearches").prepend(previousCity);
             }
 //listening on the entire page for that class
         $("#savedSearches").on("click",".listCities", function (event) {
@@ -203,7 +203,7 @@
 
 
             previousCity = $("<li>").text(cityName).addClass("listCities");
-            $("#savedSearches").append(previousCity);
+            $("#savedSearches").prepend(previousCity);
 
 
             //used Moment.js to bring in the date
