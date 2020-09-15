@@ -56,7 +56,7 @@
             </div>  
             <div class="row">
                 <div class="col-sm-12">
-                    <h2 id="Five-Day-Header">5-Day Forecast</h2>
+                    <h2 id="fiveDayHeader"></h2> 
                 </div> 
             </div>
             <div class="row" id="fiveDay">  
@@ -113,7 +113,9 @@
 
         $("#mainDisplay").attr("style", "border:solid; border-width:1px; border-color: gray");
 
-
+        $("#fiveDayHeader").append("<b>5-Day Forecast</b>"); 
+        
+        // fiveDayHeader.text("5-Day Forecast");
 
           // Here we grab the text from the input box
           var citySearch = $("#city-input").val().trim();
