@@ -191,14 +191,14 @@
                 $("#fiveDay").append(dayOneForecast);
                 dayOneForecast.empty().append(dayOneIcon, dayOneTemp, dayOneHumidity);
 
-            // var dayTwoForecast=$("#Day2Forecast");    
-            //     var dayTwoTemp = $("<h3>").text("Temp: " + response.daily[1].temp.max + "˚F");
-            //     var dayTwoHumidity = $("<h3>").text("Humidity: " + response.daily[1].humidity +"%");
-            //     var dayTwoIconURL = "http://openweathermap.org/img/wn/" + response.daily[1].weather[1].icon + "@2x.png";
-            //     var dayTwoIcon = $("<img>").attr("src", dayTwoIconURL);
+            var dayTwoForecast=$("#Day2Forecast");    
+                var dayTwoTemp = $("<h3>").text("Temp: " + response.daily[1].temp.max + "˚F");
+                var dayTwoHumidity = $("<h3>").text("Humidity: " + response.daily[1].humidity +"%");
+                var dayTwoIconURL = "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png";
+                var dayTwoIcon = $("<img>").attr("src", dayTwoIconURL);
 
-            //     $("#fiveDay").append(dayTwoForecast);
-            //     dayTwoForecast.empty().append(dayTwoIcon, dayTwoTemp, dayTwoHumidity);
+                $("#fiveDay").append(dayTwoForecast);
+                dayTwoForecast.empty().append(dayTwoIcon, dayTwoTemp, dayTwoHumidity);
 
 
             // var dayThreeForecast=$("#Day3Forecast");
