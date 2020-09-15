@@ -44,7 +44,7 @@
         <div class="col-sm-9">
           <!--this is where the current conditions are displayed-->
           <h1 id="CityName"></h1>
-          <h1 id="currentDay"></h1>
+          <h2 id="currentDay"></h2>
           <div>
             <!--this is where the current conditions are displayed-->
             <div class="col-sm-12" id="currentStats"></div>
@@ -174,9 +174,9 @@
               console.log(response.current.uvi);
               console.log(response.current.weather[0].icon);
 
-            var currentTemp = $("<h3>").text("Temperature: " + response.current.temp + " ˚F");
+            var currentTemp = $("<h3>").text("Temperature: " + response.current.temp + "˚F");
             
-            var currentHumidity = $("<h3>").text("Humidity: " + response.current.humidity + " %");
+            var currentHumidity = $("<h3>").text("Humidity: " + response.current.humidity + "%");
 
             var currentWind = $("<h3>").text("Wind Speed: " + response.current.wind_speed + " MPH");   
             
