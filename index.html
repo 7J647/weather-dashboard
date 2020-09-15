@@ -40,8 +40,14 @@
           </form>
         </section>
 
+
+<!-- ///SAVED SEARCHES GO HERE -->
+
+
+
+
         <!--9 of 12 columns for the main display section SUGGESTION target with id-->
-        <div class="col-sm-9">
+        <div class="col-sm-9" id="mainDisplay">
           <!--this is where the current conditions are displayed-->
           <h1 id="CityName"></h1>
           <h2 id="currentDay"></h2>
@@ -50,9 +56,17 @@
             <div class="col-sm-12" id="currentStats"></div>
           </div>
 
-          <div>
+          <div class="row" id="fiveDay">
             <!--this is where the 5-day forecast will go and float left-->
-            <div class="col-sm-12" id="fiveDayForecast"></div>
+            <div class="col-sm-2" id="Day1Forecast"></div>
+            <div class="col-sm-2" id="Day2Forecast"></div>
+            <div class="col-sm-2" id="Day3Forecast"></div>
+            <div class="col-sm-2" id="Day4Forecast"></div>
+            <div class="col-sm-2" id="Day5Forecast"></div>
+
+<!--5 day forecast goes here-->
+
+
           </div>
         </div>
       </div>
@@ -158,21 +172,42 @@
               url: queryGetAll,
               method: "GET",
             }).then(function (response) {
-              console.log(response);
-              console.log(response.daily[1].humidity + "% humidity");
-              console.log(response.daily[1].weather[0].icon);
-              console.log(
-                "the high will be " +
-                  response.daily[1].temp.max +
-                  " degrees Fahrenheit"
-              );
+            //   console.log(response);
+            //   console.log(response.daily[1].humidity + "% humidity");
+            //   console.log(response.daily[1].weather[0].icon);
+            //   console.log(
+            //     "the high will be " +
+            //       response.daily[1].temp.max +
+            //       " degrees Fahrenheit"
+            //   );
+//5-day icons
 
-              console.log("the above is 5-day stuff");
-              console.log(response.current.humidity);
-              console.log(response.current.temp);
-              console.log(response.current.wind_speed);
-              console.log(response.current.uvi);
-              console.log(response.current.weather[0].icon);
+            var dayOneForecast= $("#Day1Forecast");     
+                var dayOneTemp = $("<h3>").text("Temp: " + response.daily[0].temp.max + "˚F");
+                var dayOneHumidity = $("<h3>").text("Humidity: " + response.daily[0].humidity +"%");
+                var dayOneIconURL = "http://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@2x.png";
+                var dayOneIcon = $("<img>").attr("src", dayOneIconURL);
+
+                $("#fiveDay").append(dayOneForecast);
+                dayOneForecast.empty().append(dayOneIcon, dayOneTemp, dayOneHumidity);
+
+            // var dayTwoForecast=$("#Day2Forecast");    
+            //     var dayTwoTemp = $("<h3>").text("Temp: " + response.daily[1].temp.max + "˚F");
+            //     var dayTwoHumidity = $("<h3>").text("Humidity: " + response.daily[1].humidity +"%");
+            //     var dayTwoIconURL = "http://openweathermap.org/img/wn/" + response.daily[1].weather[1].icon + "@2x.png";
+            //     var dayTwoIcon = $("<img>").attr("src", dayTwoIconURL);
+
+            //     $("#fiveDay").append(dayTwoForecast);
+            //     dayTwoForecast.empty().append(dayTwoIcon, dayTwoTemp, dayTwoHumidity);
+
+
+            // var dayThreeForecast=$("#Day3Forecast");
+            // var dayFourForecast=$("#Day4Forecast");
+            // var dayFiveForecast=$("#Day5Forecast");
+
+
+
+
 
             var currentTemp = $("<h3>").text("Temperature: " + response.current.temp + "˚F");
             
@@ -183,22 +218,6 @@
             var uvIndexText = $("<h3>").text("UV Index: "); 
                 uvIndexText.attr("style", "float:left");
             
-        //    //turning the UV Index into a number
-        //     var uvIndex = parseInt(response.current.uvi); 
-        //     var uvIndexIcon = $("<p>");
-            // console.log(typeof uvIndex);
-
-                // uvIndex.attr("style", "font-size: 24; color: white; background-color: green");
-            
-            
-            
-                // if (uvIndex > 8) {
-                //     uvIndex.attr("background-color", "green");
-                // }
-
-                // $("#currentStats").empty;
-                // $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndex);
-
             var weatherIconURL = "http://openweathermap.org/img/wn/" + response.current.weather[0].icon + "@2x.png";
 
                 var weatherIcon = $("<img>").attr("src", weatherIconURL);
