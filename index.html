@@ -41,7 +41,7 @@
         <!--9 of 12 columns for the main display section SUGGESTION target with id-->
         <div class="col-sm-9">
           <!--this is where the current conditions are displayed-->
-          <h1 id="CityName">New York</h1>
+          <h1 id="CityName"></h1>
           <div>
             <!--this is where the current conditions are displayed-->
             <div class="col-sm-12" id="currentStats"></div>
@@ -163,7 +163,7 @@
               console.log(response.current.temp);
               console.log(response.current.wind_speed);
               console.log(response.current.uvi);
-            //   console.log(response.weather[0].icon);
+              console.log(response.current.weather[0].icon);
 
             var currentTemp = $("<h3>").text("Temperature: " + response.current.temp + " ˚F");
             
@@ -174,14 +174,17 @@
             var uvIndex = $("<h3>").text("UV Index: " + response.current.uvi); 
 
                 // $("#currentStats").empty;
-                $("#currentStats").empty().append(currentTemp, currentHumidity, currentWind, uvIndex);
-    
+                // $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndex);
 
+            var weatherIconURL = "http://openweathermap.org/img/wn/" + response.current.weather[0].icon + "@2x.png";
 
+                var weatherIcon = $("<img>").attr("src", weatherIconURL);
 
+                $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndex);
+
+                // uvIndex.append(weatherIcon);
             });
           });
-
 
         //   SUGGESTION   previousSearchTerms.push(searchTerm);
         //   localStorage.setItem("previousSearchTerms", JSON.stringify(searchTerm));
