@@ -12,7 +12,7 @@ $("#searchButton").attr("style", "background-color: #007bff; color: white; heigh
 //     searchIcon.attr("style", "display:block; margin-left:auto; margin-right:auto");
 //     searchButton.append(searchIcon);
 
- 
+//  uvIndex.attr("style", "background-color: red; color: white; font-size: 48px");
 
 
 

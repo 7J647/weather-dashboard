@@ -180,7 +180,21 @@
 
             var currentWind = $("<h3>").text("Wind Speed: " + response.current.wind_speed + " MPH");   
             
-            var uvIndex = $("<h3>").text("UV Index: " + response.current.uvi); 
+            var uvIndexText = $("<h3>").text("UV Index: "); 
+                uvIndexText.attr("style", "float:left");
+            
+        //    //turning the UV Index into a number
+        //     var uvIndex = parseInt(response.current.uvi); 
+        //     var uvIndexIcon = $("<p>");
+            // console.log(typeof uvIndex);
+
+                // uvIndex.attr("style", "font-size: 24; color: white; background-color: green");
+            
+            
+            
+                // if (uvIndex > 8) {
+                //     uvIndex.attr("background-color", "green");
+                // }
 
                 // $("#currentStats").empty;
                 // $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndex);
@@ -189,7 +203,36 @@
 
                 var weatherIcon = $("<img>").attr("src", weatherIconURL);
 
-                $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndex);
+                $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndexText);
+
+                 //turning the UV Index into a number
+                 var uvIndexIcon = $("<div>");
+                    uvIndexText.append(uvIndexIcon);
+                    uvIndexIcon.attr("style", "float:left");
+                 var uvIndex = parseInt(response.current.uvi); 
+                    uvIndexIcon.append(uvIndex);
+                    
+                    if (uvIndex >=0 && uvIndex <3) {
+                        uvIndexIcon.attr("style", "background-color:green");   
+                    }
+
+                    else if (uvIndex >=3 && uvIndex <6) {
+                        uvIndexIcon.attr("style", "background-color:yellow");   
+                    }
+
+                    else if (uvIndex >=6 && uvIndex <8) {
+                        uvIndexIcon.attr("style", "background-color:orange");
+                    }
+
+                    else if (uvIndex >=8 && uvIndex <11) {
+                        uvIndexIcon.attr("style", "background-color:red");
+                    }
+
+                    else if (uvIndex >=11) {
+                        uvIndexIcon.attr("style", "background-color:purple");
+                    }
+
+            
 
                 // uvIndex.append(weatherIcon);
             });
