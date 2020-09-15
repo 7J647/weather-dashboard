@@ -172,14 +172,7 @@
               url: queryGetAll,
               method: "GET",
             }).then(function (response) {
-            //   console.log(response);
-            //   console.log(response.daily[1].humidity + "% humidity");
-            //   console.log(response.daily[1].weather[0].icon);
-            //   console.log(
-            //     "the high will be " +
-            //       response.daily[1].temp.max +
-            //       " degrees Fahrenheit"
-            //   );
+           
 //5-day icons
 
             var dayOneForecast= $("#Day1Forecast");     
@@ -201,7 +194,15 @@
                 dayTwoForecast.empty().append(dayTwoIcon, dayTwoTemp, dayTwoHumidity);
 
 
-            // var dayThreeForecast=$("#Day3Forecast");
+            var dayThreeForecast=$("#Day3Forecast");   
+                var dayThreeTemp = $("<h3>").text("Temp: " + response.daily[2].temp.max + "˚F");
+                var dayThreeHumidity = $("<h3>").text("Humidity: " + response.daily[2].humidity +"%");
+                var dayThreeIconURL = "http://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png";
+                var dayThreeIcon = $("<img>").attr("src", dayThreeIconURL);
+
+                $("#fiveDay").append(dayThreeForecast);
+                dayThreeForecast.empty().append(dayThreeIcon, dayThreeTemp, dayThreeHumidity);
+
             // var dayFourForecast=$("#Day4Forecast");
             // var dayFiveForecast=$("#Day5Forecast");
 
