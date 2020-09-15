@@ -18,9 +18,6 @@
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-    <!-- testing Bootstrap -->
-    <!-- <h1>Hello world!</h1> -->
-    <!-- this is outside the container so it stretches across browser -->
     <div>
       <p id="dashboard">Weather Dashboard</p>
     </div>
@@ -38,37 +35,42 @@
             <!-- This button will trigger our AJAX call -->
             <input id="searchButton" type="submit" value="Submit" />
           </form>
+        <ul id="savedSearches">
+
+        </ul>
         </section>
 
-
+       
 <!-- ///SAVED SEARCHES GO HERE -->
 
-
-
-
-        <!--9 of 12 columns for the main display section SUGGESTION target with id-->
-        <div class="col-sm-9" id="mainDisplay">
+      
+        <!--9 of 12 columns for the main display section-->
+        <div class="col-sm-9">
           <!--this is where the current conditions are displayed-->
-          <h1 id="CityName"></h1>
-          <h2 id="currentDay"></h2>
-          <div>
-            <!--this is where the current conditions are displayed-->
-            <div class="col-sm-12" id="currentStats"></div>
-          </div>
+            <div class="row"  id="mainDisplay">
+                <div class="col-sm-12">
+                    <h1 id="CityName"></h1>
+                    <h2 id="currentDay"></h2>
+                    <div id="currentStats"></div>
+                </div>    
+            </div>  
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 id="Five-Day-Header">5-Day Forecast</h2>
+                </div> 
+            </div>
+            <div class="row" id="fiveDay">  
+                <div class="col-sm-2" id="Day1Forecast"></div>
+                <div class="col-sm-2" id="Day2Forecast"></div>
+                <div class="col-sm-2" id="Day3Forecast"></div>
+                <div class="col-sm-2" id="Day4Forecast"></div>
+                <div class="col-sm-2" id="Day5Forecast"></div>
+            </div>  
+            
+        </div>    
 
-          <div class="row" id="fiveDay">
-            <!--this is where the 5-day forecast will go and float left-->
-            <div class="col-sm-2" id="Day1Forecast"></div>
-            <div class="col-sm-2" id="Day2Forecast"></div>
-            <div class="col-sm-2" id="Day3Forecast"></div>
-            <div class="col-sm-2" id="Day4Forecast"></div>
-            <div class="col-sm-2" id="Day5Forecast"></div>
-
-<!--5 day forecast goes here-->
-
-
-          </div>
-        </div>
+          
+        
       </div>
     </div>
 
@@ -77,16 +79,61 @@
       $("<h1>").attr("style", "float:left");
       $("#searchSection").attr("style", "float:left");
 
-      var cities = [""];
+
+    
+
+
       $(document).ready(function () {
+
+        var cities = [];
+
+        var previousCitiesSearched = JSON.parse(localStorage.getItem("previousCitiesSearched"));
+            if (previousCitiesSearched) {
+                //cities will start as an empty array, instead of nothing being there at all
+                cities = previousCitiesSearched;
+            }
+
+        var citiesList = $("<ul>");
+
+            for (i = 0; i < cities.length; i++) {
+                var previousCity = $("<li>").text(cities[i]).addClass("listCities");
+                $("#savedSearches").append(previousCity);
+            }
+//listening on the entire page for that class
+        $("#savedSearches").on("click",".listCities", function (event) {
+            console.log("someone clicked on a city in the list");
+        })
+
         // this .on click is where we generate the AJAX call
         $("#searchButton").on("click", function (event) {
           //event.preventDefault prevents the submit button from trying to submit a form therefore reloading the page, when clicked
           event.preventDefault();
           //SUGGESTION  console.log("you submitted the form");
+        //   $("Five-Day-Header").attr("style", "visibility: visible");
+
+        $("#mainDisplay").attr("style", "border:solid; border-width:1px; border-color: gray");
+
+
 
           // Here we grab the text from the input box
           var citySearch = $("#city-input").val().trim();
+
+        //   function (start() {
+
+        //     var previousSearchTerms = JSON.parse(localStorage.getItem("previousSearchTerms")):
+        //     if (currentLocalStorage){
+        //         previousSearchTerms = currentLocalStorage;      
+        //     } else (previousSearchTerms = [];
+           
+        //     }
+
+        //   })
+            
+          
+       
+
+
+
           //SUGGESTED CHANGE take off .trim
           //SUGGESTION console.log(citySearch);
           //SUGGESTION if(searchTerm.length<1)...
@@ -149,19 +196,20 @@
             var cityName = response.name;
             $("#CityName").text(cityName);
 
+            cities.push(cityName);
+            localStorage.setItem("previousCitiesSearched", JSON.stringify(cities));
+
+
+
+
+            previousCity = $("<li>").text(cityName).addClass("listCities");
+            $("#savedSearches").append(previousCity);
+
+
             //used Moment.js to bring in the date
             var currentDay = $("#currentDay");
             currentDay.text(moment().format("MMMM DD, YYYY"));
             
-
-
-            // console.log("the date is " + response.dt);
-            //SUGGESTION APPEND TO MAIN SECTION
-            //SUGGESTION USE .empty function above the append, this will clear existing results
-
-            //SUGGESTION use for Loop to append
-
-            //JOSH
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
 
@@ -176,19 +224,15 @@
 //5-day icons
 
             var dayOneForecast= $("#Day1Forecast"); 
-            var dayOneDate=$("<h5>").text(moment().add(1,'days').format("MM/DD/YY"));
-    
-            
-            // var dayOneDay = moment(currentDay, "DD-MM-YYYY").add(1, "days");
-                // console.log(dayOneDay);
+                var dayOneDate=$("<h5>").text(moment().add(1,'days').format("MM/DD/YY"));
                 var dayOneTemp = $("<h5>").text("Temp: " + response.daily[0].temp.max + "˚F");
                 var dayOneHumidity = $("<h5>").text("Humidity: " + response.daily[0].humidity +"%");
                 var dayOneIconURL = "http://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@2x.png";
                 var dayOneIcon = $("<img>").attr("src", dayOneIconURL);
 
-                dayOneForecast.attr("style", "width:35%; background-color:#007bff; color:white; margin:10px");
+                dayOneForecast.attr("style", "width:35%; background-color:#007bff; color:white; margin:10px;");
 
-                $("#fiveDay").append(dayOneForecast);
+                // $("#fiveDay").append(dayOneForecast);
                 dayOneForecast.empty().append(dayOneDate, dayOneIcon, dayOneTemp, dayOneHumidity);
 
             var dayTwoForecast=$("#Day2Forecast");   
@@ -198,7 +242,7 @@
                 var dayTwoIconURL = "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png";
                 var dayTwoIcon = $("<img>").attr("src", dayTwoIconURL);
 
-                $("#fiveDay").append(dayTwoForecast);
+                // $("#fiveDay").append(dayTwoForecast);
                 dayTwoForecast.empty().append(dayTwoDate, dayTwoIcon, dayTwoTemp, dayTwoHumidity);
                 dayTwoForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
 
@@ -210,7 +254,7 @@
                 var dayThreeIconURL = "http://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png";
                 var dayThreeIcon = $("<img>").attr("src", dayThreeIconURL);
 
-                $("#fiveDay").append(dayThreeForecast);
+                // $("#fiveDay").append(dayThreeForecast);
                 dayThreeForecast.empty().append(dayThreeDate, dayThreeIcon, dayThreeTemp, dayThreeHumidity);
                 dayThreeForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
 
@@ -221,7 +265,7 @@
                 var dayFourIconURL = "http://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png";
                 var dayFourIcon = $("<img>").attr("src", dayFourIconURL);
 
-                $("#fiveDay").append(dayFourForecast);
+                // $("#fiveDay").append(dayFourForecast);
                 dayFourForecast.empty().append(dayFourDate, dayFourIcon, dayFourTemp, dayFourHumidity);
                 dayFourForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
 
@@ -232,11 +276,11 @@
                 var dayFiveIconURL = "http://openweathermap.org/img/wn/" + response.daily[4].weather[0].icon + "@2x.png";
                 var dayFiveIcon = $("<img>").attr("src", dayFiveIconURL);
 
-                $("#fiveDay").append(dayFourForecast);
+                // $("#fiveDay").append(dayFiveForecast);
                 dayFiveForecast.empty().append(dayFiveDate, dayFiveIcon, dayFiveTemp, dayFiveHumidity);
                 dayFiveForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
     
-
+                   
 
 
 
@@ -261,6 +305,7 @@
                     uvIndexIcon.attr("style", "float:left");
                  var uvIndex = parseInt(response.current.uvi); 
                     uvIndexIcon.append(uvIndex);
+                    // $("#currentStats").append(uvIndexIcon);
                     
                     if (uvIndex >=0 && uvIndex <3) {
                         uvIndexIcon.attr("style", "background-color:green");   
@@ -289,52 +334,9 @@
           });
 
         //   SUGGESTION   previousSearchTerms.push(searchTerm);
-        //   localStorage.setItem("previousSearchTerms", JSON.stringify(searchTerm));
+        //   localStorage.setItem("previousCitiesSearched", JSON.stringify(cities));
 
-          //     http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
-
-          // var queryUvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey +"&lat=" + 33.75 + "&lon=" +-88.39;
-
-          // $.ajax({
-          //           url: queryFiveDayURL,
-          //           method: "GET"
-          //         }).then(function(response) {
-          //             console.log(response);
-          //         //   $("#currentStats").text(JSON.stringify(response));
-          //         });
-
-          // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
-
-          // var queryFiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + "&appid=" + APIKey + "&units=imperial";
-
-          //     $.ajax({
-          //           url: queryFiveDayURL,
-          //           method: "GET"
-          //         }).then(function(response) {
-          //             console.log(response);
-          //         //   $("#currentStats").text(JSON.stringify(response));
-          //         //console log on 24 hours ahead of query, assumes will be done in the afternoon obviously.
-          //         //list[i] can go up to index 39.  weather [i] is always 0.
-          //         //might need an if /else to narrow this down to always return afternoon forecasts.
-          //             console.log(response.list[39].weather[0].main);
-          //             console.log(response.list[39].weather[0].icon);
-          //             console.log("the date forecasted is " + JSON.stringify(response.list[39].dt_txt));
-          //         });
-
-          //INFORMATION ON INCORPORATING ICONS
-          // <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
-          //At the HTML above you see the unique thing missing is the src attribute, so let's fill it with some jQuery and JavaScript. You may create a variables to hold the icon code provided by the API like:
-
-          //var iconcode = a.weather[0].icon;
-          //After it you should concatenate this var iconcode with the url that contains the icons, like:
-
-          //var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-          //Finally just change src attribute in the DOM by doing this:
-
-          //$('#wicon').attr('src', iconurl);
-
-          // var city = $(this).attr("data-name");
-
+          
           ///for Loop here
         });
       });
