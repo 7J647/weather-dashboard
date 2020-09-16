@@ -113,7 +113,8 @@
 
         $("#mainDisplay").attr("style", "border:solid; border-width:1px; border-color: gray");
 
-        $("#fiveDayHeader").append("<b>5-Day Forecast</b>"); 
+        //.empty clears this out in case a user does the same search twice in a row
+        $("#fiveDayHeader").empty().append("<b>5-Day Forecast</b>"); 
         
         // fiveDayHeader.text("5-Day Forecast");
 
@@ -304,13 +305,13 @@
                  //turning the UV Index into a number
                  var uvIndexIcon = $("<div>");
                     uvIndexText.append(uvIndexIcon);
-                    uvIndexIcon.attr("style", "float:left");
+                    // uvIndexIcon.attr("style", "float:left; width:20px; color: white");
                  var uvIndex = parseInt(response.current.uvi); 
                     uvIndexIcon.append(uvIndex);
                     // $("#currentStats").append(uvIndexIcon);
                     
                     if (uvIndex >=0 && uvIndex <3) {
-                        uvIndexIcon.attr("style", "background-color:green");   
+                        uvIndexIcon.attr("style", "background-color:green; color:white");   
                     }
 
                     else if (uvIndex >=3 && uvIndex <6) {
@@ -322,11 +323,11 @@
                     }
 
                     else if (uvIndex >=8 && uvIndex <11) {
-                        uvIndexIcon.attr("style", "background-color:red");
+                        uvIndexIcon.attr("style", "background-color:red; color:white");
                     }
 
                     else if (uvIndex >=11) {
-                        uvIndexIcon.attr("style", "background-color:purple");
+                        uvIndexIcon.attr("style", "background-color:purple; color:white");
                     }
 
             
