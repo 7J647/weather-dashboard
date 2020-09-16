@@ -80,10 +80,12 @@
 
         $("#savedSearches").on("click",".listCities", function (event) {
             console.log($(this).text() + "clicked this text");
-            // var citysearch = ($(this).text());
+            var citySearch = ($(this).text());
+            console.log (citySearch);
         })
 
-       
+    //    function searchWeather 
+
         $("#searchButton").on("click", function (event) {
           event.preventDefault();
        
