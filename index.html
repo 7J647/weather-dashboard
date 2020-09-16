@@ -23,30 +23,18 @@
     </div>
 
     <div class="container">
-      <!--one row for the entire dashboard-->
       <div class = "row">
-        <!--3 of 12 columns for the search form and recent searches-->
         <section class="col-sm-3" id="searchSection">
-          <!-- <p id="searchHeader">Search for a city:</p> -->
-
           <form id="searchCity">
-            <label>Search for a city</label>
+            <label>Search for a city:</label>
             <input type="text" id="city-input" />
-            <!-- This button will trigger our AJAX call -->
             <input id="searchButton" type="submit" value="Submit" />
           </form>
         <ul id="savedSearches">
-
         </ul>
         </section>
 
-       
-<!-- ///SAVED SEARCHES GO HERE -->
-
-      
-        <!--9 of 12 columns for the main display section-->
         <div class="col-sm-9">
-          <!--this is where the current conditions are displayed-->
             <div class="row"  id="mainDisplay">
                 <div class="col-sm-12">
                     <h1 id="CityName"></h1>
@@ -65,23 +53,13 @@
                 <div class="col-sm-2" id="Day3Forecast"></div>
                 <div class="col-sm-2" id="Day4Forecast"></div>
                 <div class="col-sm-2" id="Day5Forecast"></div>
-            </div>  
-            
-        </div>    
-
-          
-        
+            </div>            
+        </div>         
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-      $("<h1>").attr("style", "float:left");
-      $("#searchSection").attr("style", "float:left");
-
-
-    
-
 
       $(document).ready(function () {
 
@@ -89,7 +67,6 @@
 
         var previousCitiesSearched = JSON.parse(localStorage.getItem("previousCitiesSearched"));
             if (previousCitiesSearched) {
-                //cities will start as an empty array, instead of nothing being there at all
                 cities = previousCitiesSearched;
             }
 
@@ -98,28 +75,23 @@
             for (i = 0; i < cities.length; i++) {
                 var previousCity = $("<li>").text(cities[i]).addClass("listCities");
                 $("#savedSearches").prepend(previousCity);
+
             }
-//listening on the entire page for that class
+
         $("#savedSearches").on("click",".listCities", function (event) {
-            console.log("someone clicked on a city in the list");
+            console.log($(this).text() + "clicked this text");
+            // var citysearch = ($(this).text());
         })
 
-        // this .on click is where we generate the AJAX call
+       
         $("#searchButton").on("click", function (event) {
-          //event.preventDefault prevents the submit button from trying to submit a form therefore reloading the page, when clicked
           event.preventDefault();
-          //SUGGESTION  console.log("you submitted the form");
-        //   $("Five-Day-Header").attr("style", "visibility: visible");
+       
+            $("#mainDisplay").attr("style", "border:solid; border-width:1px; border-color: gray");
 
-        $("#mainDisplay").attr("style", "border:solid; border-width:1px; border-color: gray");
-
-        //.empty clears this out in case a user does the same search twice in a row
-        $("#fiveDayHeader").empty().append("<b>5-Day Forecast</b>"); 
+            $("#fiveDayHeader").empty().append("<b>5-Day Forecast</b>"); 
         
-        // fiveDayHeader.text("5-Day Forecast");
-
-          // Here we grab the text from the input box
-          var citySearch = $("#city-input").val().trim();
+            var citySearch = $("#city-input").val().trim();
 
         //   function (start() {
 
@@ -141,7 +113,7 @@
           //SUGGESTION console.log(citySearch);
           //SUGGESTION if(searchTerm.length<1)...
 
-          // This is our API key so that we don't have to type out a long URL
+
           var APIKey = "924c9807e2ecee5b538b9faeb8d6306b";
 
           //LOCAL STORAGE var previousSearchTerms = JSON.parse(localStorage.getItem("previousSearchTerms"));
@@ -159,57 +131,24 @@
 
           // }
 
-          // init();  calling the function
-
-          // Here we have built the URL we need to query the database
+     
           var queryURL =
-            "https://api.openweathermap.org/data/2.5/weather?q=" +
-            citySearch +
-            "&appid=" +
-            APIKey +
-            "&units=imperial";
+            "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&appid=" + APIKey + "&units=imperial";
 
-          $.ajax({
-            url: queryURL,
-            method: "GET",
-          }).then(function (response) {
-            console.log(response);
-            //   $("#currentStats").text(JSON.stringify(response));
-            console.log(
-              "the temperature is " + response.main.temp + " degrees Fahrenheit"
-            );
-            console.log(
-              "the humidity is " + response.main.humidity + " percent"
-            );
-            console.log("the wind speed is " + response.wind.speed + " MPH");
-            console.log(
-              "the conditions are " +
-                response.weather[0].main +
-                " and the weather icon code is " +
-                response.weather[0].icon
-            );
-            console.log(
-              "the coordinates are " +
-                response.coord.lat +
-                " degrees latitude / " +
-                response.coord.lon +
-                " degrees longitude"
-            );
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+                }).then(function (response) {
 
             var cityName = response.name;
             $("#CityName").text(cityName);
 
-            cities.push(cityName);
-            localStorage.setItem("previousCitiesSearched", JSON.stringify(cities));
+                cities.push(cityName);
+                localStorage.setItem("previousCitiesSearched", JSON.stringify(cities));
 
+                previousCity = $("<li>").text(cityName).addClass("listCities");
+                $("#savedSearches").prepend(previousCity);
 
-
-
-            previousCity = $("<li>").text(cityName).addClass("listCities");
-            $("#savedSearches").prepend(previousCity);
-
-
-            //used Moment.js to bring in the date
             var currentDay = $("#currentDay");
             currentDay.text(moment().format("MMMM DD, YYYY"));
             
@@ -220,11 +159,9 @@
               "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly&appid=" + APIKey + "&units=imperial";
 
             $.ajax({
-              url: queryGetAll,
-              method: "GET",
-            }).then(function (response) {
-           
-//5-day icons
+                url: queryGetAll,
+                method: "GET",
+                }).then(function (response) {
 
             var dayOneForecast= $("#Day1Forecast"); 
                 var dayOneDate=$("<h5>").text(moment().add(1,'days').format("MM/DD/YY"));
@@ -232,10 +169,7 @@
                 var dayOneHumidity = $("<h5>").text("Humidity: " + response.daily[0].humidity +"%");
                 var dayOneIconURL = "http://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@2x.png";
                 var dayOneIcon = $("<img>").attr("src", dayOneIconURL);
-
                 dayOneForecast.attr("style", "width:35%; background-color:#007bff; color:white; margin:10px;");
-
-                // $("#fiveDay").append(dayOneForecast);
                 dayOneForecast.empty().append(dayOneDate, dayOneIcon, dayOneTemp, dayOneHumidity);
 
             var dayTwoForecast=$("#Day2Forecast");   
@@ -244,11 +178,8 @@
                 var dayTwoHumidity = $("<h5>").text("Humidity: " + response.daily[1].humidity +"%");
                 var dayTwoIconURL = "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png";
                 var dayTwoIcon = $("<img>").attr("src", dayTwoIconURL);
-
-                // $("#fiveDay").append(dayTwoForecast);
                 dayTwoForecast.empty().append(dayTwoDate, dayTwoIcon, dayTwoTemp, dayTwoHumidity);
                 dayTwoForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
-
 
             var dayThreeForecast=$("#Day3Forecast");  
                 var dayThreeDate=$("<h5>").text(moment().add(3,'days').format("MM/DD/YY")); 
@@ -256,8 +187,6 @@
                 var dayThreeHumidity = $("<h5>").text("Humidity: " + response.daily[2].humidity +"%");
                 var dayThreeIconURL = "http://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png";
                 var dayThreeIcon = $("<img>").attr("src", dayThreeIconURL);
-
-                // $("#fiveDay").append(dayThreeForecast);
                 dayThreeForecast.empty().append(dayThreeDate, dayThreeIcon, dayThreeTemp, dayThreeHumidity);
                 dayThreeForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
 
@@ -267,8 +196,6 @@
                 var dayFourHumidity = $("<h5>").text("Humidity: " + response.daily[3].humidity +"%");
                 var dayFourIconURL = "http://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png";
                 var dayFourIcon = $("<img>").attr("src", dayFourIconURL);
-
-                // $("#fiveDay").append(dayFourForecast);
                 dayFourForecast.empty().append(dayFourDate, dayFourIcon, dayFourTemp, dayFourHumidity);
                 dayFourForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
 
@@ -278,15 +205,9 @@
                 var dayFiveHumidity = $("<h5>").text("Humidity: " + response.daily[4].humidity +"%");
                 var dayFiveIconURL = "http://openweathermap.org/img/wn/" + response.daily[4].weather[0].icon + "@2x.png";
                 var dayFiveIcon = $("<img>").attr("src", dayFiveIconURL);
-
-                // $("#fiveDay").append(dayFiveForecast);
                 dayFiveForecast.empty().append(dayFiveDate, dayFiveIcon, dayFiveTemp, dayFiveHumidity);
                 dayFiveForecast.attr("style", "width:30%; background-color:#007bff; color:white; margin:10px");
     
-                   
-
-
-
             var currentTemp = $("<h3>").text("Temperature: " + response.current.temp + "˚F");
             
             var currentHumidity = $("<h3>").text("Humidity: " + response.current.humidity + "%");
@@ -302,37 +223,25 @@
 
                 $("#currentStats").empty().append(weatherIcon, currentTemp, currentHumidity, currentWind, uvIndexText);
 
-                 //turning the UV Index into a number
                  var uvIndexIcon = $("<div>");
                     uvIndexText.append(uvIndexIcon);
-                    // uvIndexIcon.attr("style", "float:left; width:20px; color: white");
                  var uvIndex = parseInt(response.current.uvi); 
-                    uvIndexIcon.append(uvIndex);
-                    // $("#currentStats").append(uvIndexIcon);
-                    
+                    uvIndexIcon.append(uvIndex);    
                     if (uvIndex >=0 && uvIndex <3) {
                         uvIndexIcon.attr("style", "background-color:green; text-align:center; color:white");   
                     }
-
                     else if (uvIndex >=3 && uvIndex <6) {
                         uvIndexIcon.attr("style", "background-color:yellow; text-align:center");   
                     }
-
                     else if (uvIndex >=6 && uvIndex <8) {
                         uvIndexIcon.attr("style", "background-color:orange; text-align:center");
                     }
-
                     else if (uvIndex >=8 && uvIndex <11) {
                         uvIndexIcon.attr("style", "background-color:red; color:white; text-align:center");
                     }
-
                     else if (uvIndex >=11) {
                         uvIndexIcon.attr("style", "background-color:purple; color:white; text-align:center");
                     }
-
-            
-
-                // uvIndex.append(weatherIcon);
             });
           });
 
