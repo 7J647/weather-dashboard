@@ -76,8 +76,12 @@
                 var previousCity = $("<li>").text(cities[i]).addClass("listCities");
                 $("#savedSearches").prepend(previousCity);
 
+                var lastCitySearched = cities[cities.length - 1];
+                console.log(lastCitySearched + "last city");
+                
             }
 
+        
         $("#savedSearches").on("click",".listCities", function (event) {
             event.preventDefault();
            
