@@ -22,7 +22,10 @@ Finally, when viewed on the actual URL there's a "5-Day Forecast" heading that I
 
 The URL for this website is https://7j647.github.io/weather-dashboard/
 
-<img src ="./ScreenShot.png" alt= "Weather Dashboard app screen shot">
+<img src ="./Atlanta.png" alt= "Weather Dashboard app screen shot Atlanta">
+<img src ="./Honolulu.png" alt= "Weather Dashboard app screen shot Honolulu">
+<img src ="./Las Vegas.png" alt= "Weather Dashboard app screen shot Las Vegas">
+<img src ="./Reykjavik.png" alt= "Weather Dashboard app screen shot Reykjavik">
 
 ### Credits
 
